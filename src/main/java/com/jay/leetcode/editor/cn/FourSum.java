@@ -40,16 +40,72 @@
   
 package com.jay.leetcode.editor.cn;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FourSum{
   public static void main(String[] args) {
        Solution solution = new FourSum().new Solution();
+      System.out.println(solution.fourSum(new int[]{-1,0,1,2,-1,-4}, -1));
   }
   //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
-        return null;
+        List<List<Integer>> ans = new ArrayList<>();
+        if (nums == null || nums.length < 4) {
+            return ans;
+        }
+
+         // -4 -1 -1 0 1 2
+        Arrays.sort(nums);
+        int len = nums.length;
+        for (int i=0; i<=len-4; i++) {
+            if (i>0 && nums[i] == nums[i-1]) {
+                continue;
+            }
+            long temp = (long)nums[i] + (long)nums[i+1] +  (long)nums[i+2] + (long)nums[i+3];
+            if (temp > (long)target) {
+                return ans;
+            }
+            temp = (long)nums[i] + (long)nums[len-3] +  (long)nums[len-2] + (long)nums[len-1];
+            if (temp < (long)target) {
+                continue;
+            }
+            for (int j=i+1;j<=len-3;j++) {
+                if (j>i+1 && nums[j] == nums[j-1]) {
+                    continue;
+                }
+                temp = (long)nums[i] + (long)nums[j] + (long)nums[j+1] + (long)nums[j+2];
+                if (temp > (long)target) {
+                    break;
+                }
+                temp = (long)nums[i] + (long)nums[j] + (long)nums[len-2] + (long)nums[len-1];
+                if (temp < (long)target) {
+                    continue;
+                }
+                int l = j+1, r=len-1;
+                while (l<r) {
+                    long res = (long)nums[i] + (long)nums[j] + (long)nums[l] + (long)nums[r];
+                    if (res == (long)target) {
+                        List<Integer> tmp = new ArrayList<>();
+                        tmp.add(nums[i]);
+                        tmp.add(nums[j]);
+                        tmp.add(nums[l]);
+                        tmp.add(nums[r]);
+                        ans.add(tmp);
+                        while(++l<r && nums[l] == nums[l-1]);
+                        while(--r>l && nums[r] == nums[r+1]);
+                    } else if (res > target) {
+                        r--;
+                    } else {
+                        l++;
+                    }
+                }
+            }
+        }
+
+        return ans;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

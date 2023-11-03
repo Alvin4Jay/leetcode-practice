@@ -72,12 +72,8 @@ class Solution {
         int carry = 0;
         while(l1 != null && l2 != null) {
             int temp = l1.val + l2.val + carry;
-            if (temp >= 10) {
-                carry = 1;
-            } else {
-                carry = 0;
-            }
-            int curVal = temp%10;
+            carry = temp / 10;
+            int curVal = temp % 10;
             ListNode tempNode = new ListNode(curVal);
             if (ans == null) {
                 ans = tempNode;
@@ -92,11 +88,7 @@ class Solution {
 
         while (l1 != null) {
             int temp = l1.val + carry;
-            if (temp >= 10) {
-                carry = 1;
-            } else {
-                carry = 0;
-            }
+            carry = temp / 10;
             int curVal = temp%10;
             ListNode tempNode = new ListNode(curVal);
             if (ans == null) {
@@ -111,11 +103,7 @@ class Solution {
 
         while (l2 != null) {
             int temp = l2.val + carry;
-            if (temp >= 10) {
-                carry = 1;
-            } else {
-                carry = 0;
-            }
+            carry = temp / 10;
             int curVal = temp%10;
             ListNode tempNode = new ListNode(curVal);
             if (ans == null) {

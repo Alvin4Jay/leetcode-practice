@@ -1,0 +1,38 @@
+class Solution {
+      public int[] searchRange(int[] nums, int target) {
+          if (nums == null || nums.length == 0) {
+              return new int[]{-1, -1};
+          }
+
+          int left = search(nums, true, target);
+          int right = search(nums, false, target);
+          return new int[]{left, right};
+      }
+
+      public int search(int[] nums, boolean searchLeft, int target) {
+          int l = 0, r = nums.length - 1, ans = -1;
+
+          while (l <= r) {
+              int mid = (l+r)/2;
+              if (nums[mid] != target) {
+                  if (nums[mid] > target) {
+                      r = mid-1;
+                  } else {
+                      l = mid+1;
+                  }
+              } else {
+                  ans = mid;
+                  if (searchLeft) {
+                      r = mid-1;
+                  } else {
+                      l  = mid+1;
+                  }
+              }
+          }
+          return ans;
+      }
+
+}
+
+//runtime:0 ms
+//memory:44.3 MB

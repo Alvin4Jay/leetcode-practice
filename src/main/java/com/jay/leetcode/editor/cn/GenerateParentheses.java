@@ -44,25 +44,44 @@ class Solution {
         return ans;
     }
 
-    private void getParenthesis(List<String> ans, int left, int right, String cur) {
-        if (left > right) {
-            return;
-        }
+//    private void getParenthesis(List<String> ans, int left, int right, String cur) {
+//        if (left > right) {
+//            return;
+//        }
+//
+//        if (left == right && left == 0) {
+//            ans.add(cur);
+//            return;
+//        }
+//        if (left == right) {
+//            getParenthesis(ans, left-1, right, cur+"(");
+//        } else if (left < right && left > 0) {
+//            getParenthesis(ans, left-1, right, cur+"(");
+//            getParenthesis(ans, left, right-1, cur+")");
+//        } else if (left < right && left == 0) {
+//            getParenthesis(ans, left, right-1, cur+")");
+//        }
+//    }
 
-        if (left == right && left == 0) {
+      private void getParenthesis(List<String> ans, int left, int right, String cur) {
+        if (left == right && left == 0) { // 有效组合，截止
             ans.add(cur);
             return;
         }
-        if (left == right) {
-            getParenthesis(ans, left-1, right, cur+"(");
-        } else if (left < right && left > 0) {
-            getParenthesis(ans, left-1, right, cur+"(");
-            getParenthesis(ans, left, right-1, cur+")");
-        } else if (left < right && left == 0) {
-            getParenthesis(ans, left, right-1, cur+")");
-        }
-    }
 
+        if (left > right) { // 无效
+            return;
+        }
+
+        if (left == right) {
+            getParenthesis(ans, left-1, right, cur + "("); // 只能取(
+        } else {
+            if (left > 0) {
+                getParenthesis(ans, left-1, right, cur + "("); // 取(
+            }
+            getParenthesis(ans, left, right-1, cur + ")"); // 取)
+        }
+      }
 }
 //leetcode submit region end(Prohibit modification and deletion)
 

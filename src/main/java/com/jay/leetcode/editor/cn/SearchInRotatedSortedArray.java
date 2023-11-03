@@ -49,42 +49,34 @@ package com.jay.leetcode.editor.cn;
 public class SearchInRotatedSortedArray{
   public static void main(String[] args) {
        Solution solution = new SearchInRotatedSortedArray().new Solution();
-       int[] nums = {4,5,6,7,0,1,2};
+       int[] nums = {5,1,3};
       System.out.println(solution.search(nums, 0));
   }
   //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-    public int search(int[] nums, int target) {
-        if (nums == null || nums.length == 0) {
-            return -1;
-        }
-        if (nums.length == 1) {
-            return nums[0] == target ? 0 : -1;
-        }
-
-        int len = nums.length;
-        int l = 0, r = len-1;
-        while (l <= r) {
-            int mid = (l+r)/2;
-            if (nums[mid] == target) {
-                return mid;
-            }
-            if (nums[l] <= nums[mid]) { // 左半边有序
-                if (target >= nums[l] && target < nums[mid]) { // 判断是否在左半边有序范围
-                    r = mid-1;
-                } else {
-                    l = mid+1;
-                }
-            } else { // 右半边有序
-                if (target > nums[mid] && target<=nums[r]) { // 判断是否在右半边有序范围
-                    l = mid+1;
-                } else {
-                    r = mid-1;
-                }
-            }
-        }
-        return -1;
-    }
+      public int search(int[] nums, int target) {
+          int len = nums.length, l =0, r=len-1;
+          while (l <= r) {
+              int mid = (l+r)/2;
+              if (nums[mid] == target) {
+                  return mid;
+              }
+              if (nums[l]<=nums[mid]) {
+                  if (nums[l] <= target && target < nums[mid]) {
+                      r = mid-1;
+                  } else {
+                      l = mid+1;
+                  }
+              } else {
+                  if (target > nums[mid] && target<=nums[r]) {
+                      l = mid+1;
+                  } else {
+                      r = mid-1;
+                  }
+              }
+          }
+          return -1;
+      }
 }
 //leetcode submit region end(Prohibit modification and deletion)
 

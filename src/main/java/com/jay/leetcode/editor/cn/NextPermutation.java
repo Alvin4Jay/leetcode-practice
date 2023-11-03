@@ -59,11 +59,49 @@ public class NextPermutation{
   }
   //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-    public void nextPermutation(int[] nums) {
-        
+      public void nextPermutation(int[] nums) {
+          if (nums == null || nums.length <= 1) {
+              return;
+          }
 
+          int len = nums.length;
+          int i = len-2, j = len-1, k = len-1;
+          while (i>=0 && nums[i]>=nums[j]) {
+              i--;
+              j--;
+          }
+          if (i<0) {
+              // 逆转[j(0), end]
+              reverse(nums, 0, len-1);
+              return;
+          }
+          while(nums[i]>=nums[k]) {
+              k--;
+          }
+          swap(nums, i, k);
+          // 逆序 [j, end];
+          reverse(nums, j, len-1);
+      }
 
-    }
+//      private void reverse(int[] nums, int start, int end) {
+//          for (int i = start; i<=(start+end)/2;i++) {
+//              swap(nums, i, start+end-i);
+//          }
+//      }
+
+      private void reverse(int[] nums, int start, int end) {
+        while (start < end) {
+            swap(nums, start, end);
+            start++;
+            end--;
+        }
+      }
+
+      private void swap(int[] nums, int i, int j) {
+          int tmp = nums[i];
+          nums[i] = nums[j];
+          nums[j] = tmp;
+      }
 }
 //leetcode submit region end(Prohibit modification and deletion)
 

@@ -40,15 +40,35 @@
 
   
 package com.jay.leetcode.editor.cn;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class LongestSubstringWithoutRepeatingCharacters{
   public static void main(String[] args) {
        Solution solution = new LongestSubstringWithoutRepeatingCharacters().new Solution();
+      System.out.println(solution.lengthOfLongestSubstring("abcabcbb"));
   }
   //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
 
-        return 0;
+        int len = s.length();
+        int l = 0, r = 0, ans = 0;
+        Map<Character, Integer> posMap = new HashMap<>(); // <字符，位置>
+        for (; r < len; r++) {
+            Character c = s.charAt(r);
+            // >=l表示当前的c对应的位置是有效的；否则，无效
+            if (posMap.containsKey(c) && posMap.get(c) >= l) {
+                l = posMap.get(c) + 1;
+            }
+            posMap.put(c, r);
+            ans = Math.max(ans, r - l + 1);
+        }
+        return ans;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
